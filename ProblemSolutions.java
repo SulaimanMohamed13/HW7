@@ -1,6 +1,6 @@
 /******************************************************************
  *
- *   Sulaiman Mohamed / 272 001
+ *   YOUR NAME / SECTION NUMBER
  *
  *   This java file contains the problem solutions for the methods selectionSort,
  *   mergeSortDivisibleByKFirst, asteroidsDestroyed, and numRescueCanoes methods.
@@ -12,20 +12,7 @@ import java.util.Arrays;
 public class ProblemSolutions {
 
     /**
-     * Method SelectionSort
-     *
-     * This method performs a selection sort. This file will be spot checked,
-     * so ENSURE you are performing a Selection Sort!
-     *
-     * This is an in-place sorting operation that has two function signatures. This
-     * allows the second parameter to be optional, and if not provided, defaults to an
-     * ascending sort. If the second parameter is provided and is false, a descending
-     * sort is performed.
-     *
-     * @param values        - int[] array to be sorted.
-     * @param ascending     - if true,method performs an ascending sort, else descending.
-     *                        There are two method signatures allowing this parameter
-     *                        to not be passed and defaulting to 'true (or ascending sort).
+     * Selection Sort implementation with optional ascending/descending order
      */
     public void selectionSort(int[] values) {
         selectionSort(values, true);
@@ -47,7 +34,7 @@ public class ProblemSolutions {
                     }
                 }
             }
-            // Swap the found extreme element with the first element
+            // Swap the found extreme element
             int temp = values[extremeIndex];
             values[extremeIndex] = values[i];
             values[i] = temp;
@@ -55,11 +42,7 @@ public class ProblemSolutions {
     }
 
     /**
-     * Method mergeSortDivisibleByKFirst
-     *
-     * This method will perform a merge sort algorithm. However, all numbers
-     * that are divisible by the argument 'k', are returned first in the sorted
-     * list.
+     * Merge Sort with numbers divisible by k first
      */
     public void mergeSortDivisibleByKFirst(int[] values, int k) {
         if (k == 0) return;
@@ -83,38 +66,27 @@ public class ProblemSolutions {
 
         int i = 0, j = 0, kIdx = left;
 
-        // Merge left and right arrays with divisible by k first
-        while (i < leftArray.length && j < rightArray.length) {
-            boolean leftDiv = (leftArray[i] % k == 0);
-            boolean rightDiv = (rightArray[j] % k == 0);
-
-            if (leftDiv && !rightDiv) {
-                arr[kIdx++] = leftArray[i++];
-            } else if (!leftDiv && rightDiv) {
-                arr[kIdx++] = rightArray[j++];
-            } else {
-                // Both divisible or both not divisible - compare values
-                if (leftArray[i] <= rightArray[j]) {
-                    arr[kIdx++] = leftArray[i++];
-                } else {
-                    arr[kIdx++] = rightArray[j++];
-                }
-            }
+        // First process all divisible elements from both halves
+        while (i < leftArray.length && leftArray[i] % k == 0) {
+            arr[kIdx++] = leftArray[i++];
+        }
+        while (j < rightArray.length && rightArray[j] % k == 0) {
+            arr[kIdx++] = rightArray[j++];
         }
 
-        // Copy remaining elements
+        // Then process remaining elements from left array
         while (i < leftArray.length) {
             arr[kIdx++] = leftArray[i++];
         }
+        
+        // Finally process remaining elements from right array
         while (j < rightArray.length) {
             arr[kIdx++] = rightArray[j++];
         }
     }
 
     /**
-     * Method asteroidsDestroyed
-     *
-     * Return true if possible for all asteroids to be destroyed. Otherwise, return false.
+     * Asteroids Destroyed problem solution
      */
     public static boolean asteroidsDestroyed(int mass, int[] asteroids) {
         Arrays.sort(asteroids);
@@ -130,9 +102,7 @@ public class ProblemSolutions {
     }
 
     /**
-     * Method numRescueSleds
-     *
-     * Return the minimum number of rescue sleds required to hold all people
+     * Rescue Sleds problem solution
      */
     public static int numRescueSleds(int[] people, int limit) {
         Arrays.sort(people);
@@ -142,7 +112,7 @@ public class ProblemSolutions {
 
         while (left <= right) {
             if (people[left] + people[right] <= limit) {
-                left++;
+                left++; // Pair the lightest with the heaviest
             }
             right--;
             sleds++;
